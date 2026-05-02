@@ -13,7 +13,9 @@ Curated **Athena internal** LobeHub assistants merged with the public [lobe-chat
 
 1. Create the GitHub repo `cjam28/christoalto-ai01-agents` (if it does not exist) and push `main`.
 2. Run **Actions → Build merged agent catalog → Run workflow** once so branch **`dist`** exists before enabling `agents-sync` on the proxy stack.
-3. On Athena, add the **music MCP** once per LobeHub user if you use Lyrics and Song Gen: Streamable HTTP `https://athena.christoalto.com/music-api/mcp/` with your `MUSIC_API_KEY` (see `AI01/scripts/music-gen/README.md`).
+3. **Repository visibility:** `agents-sync` uses anonymous `git clone` / `git fetch` over HTTPS. Keep this repo **public**, or change `REPO` in the proxy stack to embed a read-only token (e.g. `https://x-access-token:TOKEN@github.com/cjam28/christoalto-ai01-agents.git`) via Portainer env (not committed to git).
+4. On Athena, add the **music MCP** once per LobeHub user if you use Lyrics and Song Gen: Streamable HTTP `https://athena.christoalto.com/music-api/mcp/` with your `MUSIC_API_KEY` (see `AI01/scripts/music-gen/README.md`).
+5. After pushing [christoalto-ai01-stacks](https://github.com/cjam28/christoalto-ai01-stacks) `lobehub` + `proxy` changes, wait for Portainer GitOps (or recreate the `lobehub` service) so `AGENTS_INDEX_URL=http://agents.internal/agents/index.json` is present inside the container (`docker exec lobehub printenv AGENTS_INDEX_URL`).
 
 ## Local build
 
