@@ -202,10 +202,12 @@ def main() -> int:
         "agents": internal_manifest + upstream_agents,
         "tags": merged_tags,
     }
-    (DIST / "index.json").write_text(
-        json.dumps(merged_index, ensure_ascii=False, separators=(",", ":")),
-        encoding="utf-8",
+    index_bytes = json.dumps(merged_index, ensure_ascii=False, separators=(",", ":")).encode(
+        "utf-8"
     )
+    (DIST / "index.json").write_bytes(index_bytes)
+    # LobeHub default locale (en-US) requests index.en-US.json before falling back.
+    (DIST / "index.en-US.json").write_bytes(index_bytes)
 
     cache_agents = cache.setdefault("agents", {})
     errors = 0
